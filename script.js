@@ -21,6 +21,10 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+    function navigateTo(url) {
+        window.location.href = url;
+    }
+    
 
     // Verifica si estamos en la página del inventario
     const tablaProductos = document.getElementById('tablaProductos');
@@ -28,22 +32,21 @@ document.addEventListener('DOMContentLoaded', () => {
         const API_URL = 'http://localhost:3003/inventario';
         obtenerProductos();
 
-        // Actualiza fecha y hora
-        function updateDateTime() {
-            const now = new Date();
-            const date = now.toLocaleDateString('es-MX', {
-                day: '2-digit',
-                month: '2-digit',
-                year: "numeric",
-            });
-            const time = now.toLocaleTimeString('es-MX', {
-                hour: "2-digit",
-                minute: "2-digit",
-            });
+        // Función para obtener y mostrar la fecha y hora actuales
+function updateDateTime() {
+    const now = new Date();
+    const dateElement = document.getElementById('date');
+    const timeElement = document.getElementById('time');
 
-            document.getElementById('date').textContent = `Fecha: ${date}`;
-            document.getElementById('time').textContent = `Hora: ${time}`;
-        }
+    // Asegúrate de que los elementos existen antes de actualizar
+    if (dateElement && timeElement) {
+        dateElement.textContent = `Fecha: ${now.toLocaleDateString()}`;
+        timeElement.textContent = `Hora: ${now.toLocaleTimeString()}`;
+    }
+}
+
+// Actualizar la fecha y hora cada segundo
+setInterval(updateDateTime, 1000);
 
         // Obtener productos
         async function obtenerProductos() {

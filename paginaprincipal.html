@@ -7,33 +7,59 @@
     <link rel="stylesheet" href="estiloPP.css">
 </head>
 <body>
+    <div class="header">
+        <div class="date-time">
+            <span id="date">Fecha:</span>
+            <span id="time">Hora:</span>
+        </div>
+        <div class="search-bar">
+            <input type="text" id="search-input" placeholder="Buscar...">
+            <button id="search-button">Buscar</button>
+        </div>
+        <div class="user-info">
+            <span id="user">Usuario:</span>
+            <img src="user-icon.png" alt="Usuario" class="user-icon">
+        </div>
+    </div>
+
     <div class="container">
         <div class="sidebar">
-            <button onclick="navigateTo('panelcontrol.html')" >Panel de control </button>
-            <button onclick="navigateTo('accesos.html')" >Accesos </button>
-            <button onclick="navigateTo('inventario.html')" >Inventario </button>
-            <button onclick="navigateTo('ventas.html')" >ventas </button>
-            <button onclick="navigateTo('reporteventas.html')" >Reporte de Ventas </button>
-            <button onclick="navigateTo('categorias.html')" >Categorias</button>
-            <button onclick="navigateTo('media.html')" >Media</button>
+            <button onclick="navigateTo('panelcontrol.html')">Panel de control</button>
+            <button onclick="navigateTo('accesos.html')">Accesos</button>
+            <button onclick="navigateTo('inventario.html')">Inventario</button>
+            <button onclick="navigateTo('ventas.html')">Ventas</button>
+            <button onclick="navigateTo('reporteventas.html')">Reporte de Ventas</button>
+            <button onclick="navigateTo('categorias.html')">Categorías</button>
+            <button onclick="navigateTo('media.html')">Media</button>
         </div>
-<div class="header">
-    <div class="date-time">
-        <span id="date">Fecha:</span>
-        <span id="time">Hora:</span>
+        <div class="main-content">
+            <h1>BIENVENIDO ALMA</h1>
+            <p>SELECCIONA UNA OPCIÓN DEL MENÚ PARA EMPEZAR</p>
+        </div>
     </div>
-<div class="user-info">
-    <span id="us
-    er">Usuario:</span>
-    <img src="user-icon.png" alt="Usuario" class="user-icon">
 
-</div>
-</div>
-<div class="main-content">
-    <H1>BIENVENIDO ALMA</H1>
-    <P>SELECCIONA UNA OPCION DEL MENU PARA EMPEZAR</P>
-</div>
-    </div>
- <script src="script.js"></script>
+    <script>
+        // Definición de navigateTo
+        function navigateTo(url) {
+            window.location.href = url;
+        }
+
+        // Actualizar fecha y hora
+        function updateDateTime() {
+            const now = new Date();
+            document.getElementById('date').textContent = `Fecha: ${now.toLocaleDateString()}`;
+            document.getElementById('time').textContent = `Hora: ${now.toLocaleTimeString()}`;
+        }
+        setInterval(updateDateTime, 1000);
+
+        // Lógica para búsqueda
+        document.getElementById('search-button').addEventListener('click', () => {
+            const query = document.getElementById('search-input').value;
+            alert(`Buscando: ${query}`);
+        });
+
+        // Inicializar fecha y hora al cargar
+        updateDateTime();
+    </script>
 </body>
 </html>
