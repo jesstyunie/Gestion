@@ -5,7 +5,8 @@ const cors = require('cors');
 const app = express();
 const port = 3003;
 
-
+const PDFDocument = require('pdfkit');
+const fs = require('fs');
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -193,7 +194,7 @@ app.get('/reporte-ventas', (req, res) => {
 
 // Ruta para generar el reporte
 // Ruta para generar el reporte
-app.post('/generar-reporte', async (req, res) => {
+app.post('/generar-reporte-pdf', async (req, res) => {
     try {
         const tipoReporte = req.body.reporte;
         let query = '';
@@ -208,87 +209,42 @@ app.post('/generar-reporte', async (req, res) => {
             return res.status(400).send('Tipo de reporte no válido');
         }
 
-        // Realizar la consulta con async/await
         const [results] = await db.query(query);
+        const PDFDocument = require('pdfkit');
+        const fs = require('fs');
+        const filePath = __dirname + '/reporte-ventas.pdf';
 
-        res.send(`
-            <h1>Reporte Generado</h1>
-            <table border="1">
-                <thead>
-                    <tr>
-                        <th>ID Venta</th>
-                        <th>Producto</th>
-                        <th>Cantidad</th>
-                        <th>Fecha</th>
-                        <th>Total</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    ${results.map(venta => `
-                        <tr>
-                            <td>${venta.id_venta}</td>
-                            <td>${venta.producto}</td>
-                            <td>${venta.cantidad}</td>
-                            <td>${venta.fecha}</td>
-                            <td>${venta.total}</td>
-                        </tr>
-                    `).join('')}
-                </tbody>
-            </table>
-        `);
+        const writeStream = fs.createWriteStream(filePath);
+        const doc = new PDFDocument();
+        doc.pipe(writeStream);
+
+        doc.fontSize(18).text('Reporte de Ventas', { align: 'center' }).moveDown(2);
+
+        results.forEach((venta) => {
+            doc.text(`ID Venta: ${venta.id}`);
+            doc.text(`Producto: ${venta.id_producto}`);
+            doc.text(`Cantidad: ${venta.cantidad_vendida}`);
+            doc.text(`Fecha: ${venta.fecha}`);
+            doc.text(`Total: $${venta.total}`);
+            doc.moveDown();
+        });
+
+        doc.end();
+
+        writeStream.on('finish', () => {
+            res.download(filePath, 'reporte-ventas.pdf', (err) => {
+                if (err) {
+                    console.error('Error al descargar el PDF:', err);
+                }
+                fs.unlinkSync(filePath);  // Eliminar archivo después de la descarga
+            });
+        });
     } catch (err) {
-        console.error(err);
+        console.error('Error al generar PDF:', err);
         res.status(500).send('Error interno del servidor');
     }
 });
 
-app.get('/generar-reporte', async (req, res) => {
-    try {
-        const tipoReporte = req.query.reporte; // Obtener el tipo de reporte desde la query string
-        let query = '';
-
-        if (tipoReporte === 'diario') {
-            query = 'SELECT * FROM ventas WHERE DATE(fecha) = CURDATE()';
-        } else if (tipoReporte === 'semanal') {
-            query = 'SELECT * FROM ventas WHERE YEARWEEK(fecha, 1) = YEARWEEK(CURDATE(), 1)';
-        } else if (tipoReporte === 'mensual') {
-            query = 'SELECT * FROM ventas WHERE MONTH(fecha) = MONTH(CURDATE()) AND YEAR(fecha) = YEAR(CURDATE())';
-        } else {
-            return res.status(400).send('Tipo de reporte no válido');
-        }
-
-        const [results] = await db.query(query);
-
-        res.send(`
-            <h1>Reporte Generado</h1>
-            <table border="1">
-                <thead>
-                    <tr>
-                        <th>ID Venta</th>
-                        <th>Producto</th>
-                        <th>Cantidad</th>
-                        <th>Fecha</th>
-                        <th>Total</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    ${results.map(venta => `
-                        <tr>
-                            <td>${venta.id_venta}</td>
-                            <td>${venta.producto}</td>
-                            <td>${venta.cantidad}</td>
-                            <td>${venta.fecha}</td>
-                            <td>${venta.total}</td>
-                        </tr>
-                    `).join('')}
-                </tbody>
-            </table>
-        `);
-    } catch (err) {
-        console.error(err);
-        res.status(500).send('Error interno del servidor');
-    }
-});
 
 
 

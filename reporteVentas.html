@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reporte de Ventas</title>
+    <title>Generar Reporte de Ventas</title>
 </head>
 <body>
-    <h1>Seleccionar Reporte de Ventas</h1>
-    <form action="/generar-reporte" method="POST">
+    <h1>Seleccionar tipo de reporte</h1>
+    <form action="http://localhost:3003/generar-reporte-pdf" method="POST">
         <label for="reporte">Selecciona tipo de reporte:</label>
         <select name="reporte" id="reporte">
             <option value="diario">Diario</option>
@@ -16,7 +16,5 @@
         </select>
         <button type="submit">Generar Reporte</button>
     </form>
-    
-    
 </body>
 </html>
