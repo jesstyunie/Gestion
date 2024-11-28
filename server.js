@@ -192,45 +192,34 @@ app.get('/reporte-ventas', (req, res) => {
 });
 
 // Ruta para generar el reporte
-app.post('/generar-reporte', (req, res) => {
-    const tipoReporte = req.body.reporte;  // Tipo de reporte: 'diario', 'semanal', 'mensual'
+// Ruta para generar el reporte
+app.post('/generar-reporte', async (req, res) => {
+    try {
+        const tipoReporte = req.body.reporte;
+        let query = '';
 
-    let query = '';
-    let mensaje = '';
-
-    // Lógica de la consulta
-    if (tipoReporte === 'diario') {
-        query = 'SELECT * FROM ventas WHERE DATE(fecha) = CURDATE()';
-        mensaje = 'Reporte Diario';
-    } else if (tipoReporte === 'semanal') {
-        query = 'SELECT * FROM ventas WHERE YEARWEEK(fecha, 1) = YEARWEEK(CURDATE(), 1)';
-        mensaje = 'Reporte Semanal';
-    } else if (tipoReporte === 'mensual') {
-        query = 'SELECT * FROM ventas WHERE MONTH(fecha) = MONTH(CURDATE()) AND YEAR(fecha) = YEAR(CURDATE())';
-        mensaje = 'Reporte Mensual';
-    }
-
-    // Depuración de la consulta generada
-    console.log('Consulta SQL:', query);
-
-    // Ejecutamos la consulta
-    db.query(query, (err, results) => {
-        if (err) {
-            console.error('Error al ejecutar la consulta:', err);
-            res.status(500).send('Error al generar el reporte');
-            return;
+        if (tipoReporte === 'diario') {
+            query = 'SELECT * FROM ventas WHERE DATE(fecha) = CURDATE()';
+        } else if (tipoReporte === 'semanal') {
+            query = 'SELECT * FROM ventas WHERE YEARWEEK(fecha, 1) = YEARWEEK(CURDATE(), 1)';
+        } else if (tipoReporte === 'mensual') {
+            query = 'SELECT * FROM ventas WHERE MONTH(fecha) = MONTH(CURDATE()) AND YEAR(fecha) = YEAR(CURDATE())';
+        } else {
+            return res.status(400).send('Tipo de reporte no válido');
         }
 
-        // Renderizamos el reporte en HTML
+        // Realizar la consulta con async/await
+        const [results] = await db.query(query);
+
         res.send(`
-            <h1>${mensaje}</h1>
+            <h1>Reporte Generado</h1>
             <table border="1">
                 <thead>
                     <tr>
                         <th>ID Venta</th>
                         <th>Producto</th>
                         <th>Cantidad</th>
-                        <th>Fecha de Venta</th>
+                        <th>Fecha</th>
                         <th>Total</th>
                     </tr>
                 </thead>
@@ -247,7 +236,58 @@ app.post('/generar-reporte', (req, res) => {
                 </tbody>
             </table>
         `);
-    });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Error interno del servidor');
+    }
+});
+
+app.get('/generar-reporte', async (req, res) => {
+    try {
+        const tipoReporte = req.query.reporte; // Obtener el tipo de reporte desde la query string
+        let query = '';
+
+        if (tipoReporte === 'diario') {
+            query = 'SELECT * FROM ventas WHERE DATE(fecha) = CURDATE()';
+        } else if (tipoReporte === 'semanal') {
+            query = 'SELECT * FROM ventas WHERE YEARWEEK(fecha, 1) = YEARWEEK(CURDATE(), 1)';
+        } else if (tipoReporte === 'mensual') {
+            query = 'SELECT * FROM ventas WHERE MONTH(fecha) = MONTH(CURDATE()) AND YEAR(fecha) = YEAR(CURDATE())';
+        } else {
+            return res.status(400).send('Tipo de reporte no válido');
+        }
+
+        const [results] = await db.query(query);
+
+        res.send(`
+            <h1>Reporte Generado</h1>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>ID Venta</th>
+                        <th>Producto</th>
+                        <th>Cantidad</th>
+                        <th>Fecha</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${results.map(venta => `
+                        <tr>
+                            <td>${venta.id_venta}</td>
+                            <td>${venta.producto}</td>
+                            <td>${venta.cantidad}</td>
+                            <td>${venta.fecha}</td>
+                            <td>${venta.total}</td>
+                        </tr>
+                    `).join('')}
+                </tbody>
+            </table>
+        `);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Error interno del servidor');
+    }
 });
 
 
