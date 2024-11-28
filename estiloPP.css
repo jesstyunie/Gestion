@@ -61,11 +61,12 @@ body {
     display: flex;
     flex-direction: column;
     height: 100vh;
+    background-color: #e6f0ff;
 }
 
 /* Header (Barra superior) */
 .header {
-    background-color: #2E0854;
+    background-color: #060539;
     color: white;
     display: flex;
     justify-content: space-between;
@@ -96,7 +97,7 @@ body {
 /* Sidebar (Barra lateral izquierda) */
 /* Sidebar (Barra lateral izquierda) */
 .sidebar {
-    background-color: #2E0854;
+    background-color: #060539;
     color: white;
     width: 20%;
     display: flex;

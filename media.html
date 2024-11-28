@@ -4,38 +4,42 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Galería de Productos</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="media.css">
 </head>
 <body>
-    <div class="header">
-        <div class="date-time">
-            <span id="date">Fecha:</span>
-            <span id="time">Hora:</span>
-        </div>
-        <div class="search-bar">
-            <input type="text" id="search-input" placeholder="Buscar...">
-            <button id="search-button">Buscar</button>
-        </div>
-        <div class="user-info">
-            <span id="user">Usuario:</span>
-            <img src="user-icon.png" alt="Usuario" class="user-icon">
-        </div>
+  <div class="header">
+    <div class="date-time">
+      <span id="date">Fecha:</span>
+      <span id="time">Hora:</span>
     </div>
+    <div class="search-bar">
+      <input type="text" id="search-input" placeholder="Buscar...">
+      <button id="search-button">Buscar</button>
+    </div>
+    <div class="user-info">
+      <span id="user">Usuario:</span>
+      <img src="user-icon.png" alt="Usuario" class="user-icon">
+    </div>
+  </div>
 
-  <header>
+  <header class="page-header">
     <h1>Inventario de Papelería</h1>
-    <input type="text" id="searchBar" placeholder="Buscar producto..." oninput="filterProducts()">
-    <div>
-      <input type="text" id="newProductName" placeholder="Nombre del producto">
-      <input type="file" id="newProductImage">
-      <button onclick="addProduct()">Agregar Producto</button>
+    <div class="product-actions">
+      <input type="text" id="searchBar" placeholder="Buscar producto..." oninput="filterProducts()">
+      <div class="add-product">
+        <input type="text" id="newProductName" placeholder="Nombre del producto">
+        <input type="file" id="newProductImage">
+        <button onclick="addProduct()">Agregar Producto</button>
+      </div>
     </div>
   </header>
+  
   <main>
     <div id="gallery" class="gallery">
-      <!-- Los productos se cargarán dinámicamente aquí -->
+      <!-- Productos cargados dinámicamente -->
     </div>
   </main>
+  
   <script src="media.js"></script>
 </body>
 </html>

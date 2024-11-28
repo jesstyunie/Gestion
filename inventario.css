@@ -1,0 +1,140 @@
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #e6f0ff;
+    color: #333;
+}
+
+h1 {
+    text-align: center;
+    color: #060539;
+    margin-top: 20px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+    margin: 30px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #d9e3f3;
+}
+
+form label {
+    margin-bottom: 5px;
+    color: #060539;
+    font-weight: bold;
+}
+
+form input {
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #b3c7e6;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+form input:focus {
+    outline: none;
+    border-color: #060539;
+    box-shadow: 0 0 5px rgba(44, 108, 202, 0.5);
+}
+
+form button {
+    padding: 10px;
+    background-color: #060539;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+form button:hover {
+    background-color: #215188;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    background-color: #ffffff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+table th, 
+table td {
+    padding: 15px;
+    text-align: center;
+    border-bottom: 1px solid #b3c7e6;
+}
+
+table th {
+    background-color: #060539;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+table tr:nth-child(even) {
+    background-color: #f7faff;
+}
+
+table tr:hover {
+    background-color: #d9e3f3;
+}
+
+button {
+    padding: 7px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.btn-eliminar {
+    background-color: #dc3545;
+    color: #fff;
+    transition: background-color 0.3s ease;
+}
+
+.btn-eliminar:hover {
+    background-color: #b52a37;
+}
+
+.btn-editar {
+    background-color: #060539;
+    color: #fff;
+    transition: background-color 0.3s ease;
+}
+
+.btn-editar:hover {
+    background-color: #060539;
+}
+.header {
+    background-color: #060539;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+
+.date-time, .user-info {
+    display: flex;
+    align-items: center;
+}
+
+.user-info .user-icon {
+    margin-left: 10px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: white;
+}

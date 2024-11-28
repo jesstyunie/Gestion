@@ -1,0 +1,128 @@
+/* General */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #e6f0ff;
+    color: #333;
+}
+
+h1 {
+    text-align: center;
+    color: #060539;
+    margin: 20px 0;
+}
+
+/* Header */
+header {
+    background-color: #ffffff;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-bottom: 2px solid #b3c7e6;
+    text-align: center;
+}
+
+header div {
+    margin-top: 10px;
+}
+
+header input {
+    padding: 10px;
+    width: 250px;
+    border: 1px solid #b3c7e6;
+    border-radius: 5px;
+    font-size: 1rem;
+    margin-right: 10px;
+}
+
+header input:focus {
+    outline: none;
+    border-color: #060539;
+    box-shadow: 0 0 5px rgba(44, 108, 202, 0.5);
+}
+
+header button {
+    padding: 10px 20px;
+    background-color: #060539;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+header button:hover {
+    background-color: #060539;
+}
+
+/* Main Content */
+main {
+    padding: 20px;
+}
+
+.categories {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+/* Category Cards */
+.category {
+    background-color: #ffffff;
+    border: 1px solid #b3c7e6;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.category:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.category h3 {
+    color: #060539;
+    margin: 10px 0;
+}
+
+/* Smaller Delete Button */
+.category button {
+    padding: 5px 10px;
+    background-color: #060539;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.8rem; /* Smaller font size */
+    transition: background-color 0.3s ease;
+}
+
+.category button:hover {
+    background-color: #060539;
+}
+/* Header (Barra superior) */
+.header {
+    background-color: #060539;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+
+.date-time, .user-info {
+    display: flex;
+    align-items: center;
+}
+
+.user-info .user-icon {
+    margin-left: 10px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: white;
+}

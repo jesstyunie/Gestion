@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verificación de Usuarios</title>
+    <link rel="stylesheet" href="accesos.css">
+</head>
+<body>
+    <!-- Barra superior -->
+    <div class="top-bar">
+        <div class="date-time">
+            <span id="date">Fecha:</span>
+            <span id="time">Hora:</span>
+        </div>
+        <div class="search-bar">
+            <input type="text" id="search-input" placeholder="Buscar...">
+            <button id="search-button">Buscar</button>
+        </div>
+        <div class="user-info">
+            <span id="user">Usuario:</span>
+            <img src="user-icon.png" alt="Usuario" class="user-icon">
+        </div>
+    </div>
+
+    <!-- Contenedor principal -->
+    <div class="main-container">
+        <div class="header">
+            <h1>ACCESOS</h1>
+        </div>
+        <div class="container">
+            <table id="userTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Rol</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Los datos de los usuarios se agregarán dinámicamente aquí -->
+                </tbody>
+            </table>
+            <button id="addUserBtn">Añadir Usuario</button>
+        </div>
+    </div>
+
+    <script src="accesos.js"></script>
+</body>
+</html>

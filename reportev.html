@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reporte de Ventas</title>
+  <link rel="stylesheet" href="reportev.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+</head>
+<body>
+  <div class="header">
+    <div class="date-time">
+      <span id="date">Fecha:</span>
+      <span id="time">Hora:</span>
+    </div>
+    <div class="search-bar">
+      <input type="text" id="search-input" placeholder="Buscar...">
+      <button id="search-button">Buscar</button>
+    </div>
+    <div class="user-info">
+      <span id="user">Usuario:</span>
+      <img src="user-icon.png" alt="Usuario" class="user-icon">
+    </div>
+  </div>
+  
+  <div class="container">
+    <h1>Reporte de Ventas</h1>
+    
+    <div class="buttons">
+      <button id="daily" class="btn">Ventas del Día</button>
+      <button id="weekly" class="btn">Ventas de la Semana</button>
+      <button id="monthly" class="btn">Ventas del Mes</button>
+      <button id="yearly" class="btn">Ventas del Año</button>
+    </div>
+
+    <div class="chart-container">
+      <canvas id="salesChart"></canvas>
+    </div>
+  </div>
+
+  <script src="reportev.js"></script>
+</body>
+</html>

@@ -23,8 +23,8 @@ let db;
         db = await mysql.createConnection({
             host: 'localhost',
             user: 'root',
-            password: '123456', // Cambia esto si tu usuario tiene contraseña
-            database: 'papeleriaG',
+            password: 'root', // Cambia esto si tu usuario tiene contraseña
+            database: 'papeleriag',
         });
         console.log('Conectado a MySQL');
     } catch (err) {

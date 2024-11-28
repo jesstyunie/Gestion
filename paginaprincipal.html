@@ -5,6 +5,62 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inventario Papelería</title>
     <link rel="stylesheet" href="estiloPP.css">
+    <style>
+        .chatbot-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+            width: 100%;
+            background-color: #f9f9f9;
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .chatbot-header {
+            font-weight: bold;
+            font-size: 24px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .chatbot-messages {
+            flex: 1;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 20px;
+            background-color: #fff;
+        }
+        .chatbot-input {
+            display: flex;
+            gap: 10px;
+        }
+        .chatbot-input input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .chatbot-input button {
+            padding: 10px 20px;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .chatbot-input button:hover {
+            background-color: #0056b3;
+        }
+
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            height: calc(100vh - 100px); /* Ajustar para compensar la altura del header */
+            width: 100%;
+        }
+    </style>
 </head>
 <body>
     <div class="header">
@@ -28,38 +84,66 @@
             <button onclick="navigateTo('accesos.html')">Accesos</button>
             <button onclick="navigateTo('inventario.html')">Inventario</button>
             <button onclick="navigateTo('ventas.html')">Ventas</button>
-            <button onclick="navigateTo('reporteventas.html')">Reporte de Ventas</button>
+            <button onclick="navigateTo('reportev.html')">Reporte de Ventas</button>
             <button onclick="navigateTo('categorias.html')">Categorías</button>
             <button onclick="navigateTo('media.html')">Media</button>
         </div>
         <div class="main-content">
-            <h1>BIENVENIDO</h1>
-            <p>SELECCIONA UNA OPCIÓN DEL MENÚ PARA EMPEZAR</p>
+            <div class="chatbot-container">
+                <div class="chatbot-header">Chatbot</div>
+                <div id="chatbot-messages" class="chatbot-messages">
+                    <p><b>Bot:</b> ¿Qué recomendación estás buscando?</p>
+                </div>
+                <div class="chatbot-input">
+                    <input type="text" id="chatbot-input" placeholder="Escribe tu mensaje...">
+                    <button onclick="sendMessage()">Enviar</button>
+                </div>
+            </div>
         </div>
     </div>
 
     <script>
-        // Definición de navigateTo
+        // Función para la navegación
         function navigateTo(url) {
             window.location.href = url;
         }
-
-        // Actualizar fecha y hora
+    
         function updateDateTime() {
             const now = new Date();
             document.getElementById('date').textContent = `Fecha: ${now.toLocaleDateString()}`;
             document.getElementById('time').textContent = `Hora: ${now.toLocaleTimeString()}`;
         }
         setInterval(updateDateTime, 1000);
-
-        // Lógica para búsqueda
+        updateDateTime();
+    
         document.getElementById('search-button').addEventListener('click', () => {
             const query = document.getElementById('search-input').value;
             alert(`Buscando: ${query}`);
         });
-
-        // Inicializar fecha y hora al cargar
-        updateDateTime();
+    
+        function sendMessage() {
+            const input = document.getElementById('chatbot-input');
+            const messages = document.getElementById('chatbot-messages');
+            const userMessage = input.value.trim();
+    
+            if (userMessage) {
+                const userMsgElement = document.createElement('p');
+                userMsgElement.innerHTML = `<b>Tú:</b> ${userMessage}`;
+                messages.appendChild(userMsgElement);
+    
+                // Respuesta automática del bot
+                const botResponseElement = document.createElement('p');
+                botResponseElement.innerHTML = `<b>Bot:</b> Estoy aquí para ayudarte.`;
+                messages.appendChild(botResponseElement);
+    
+                // Limpiar el input
+                input.value = '';
+    
+                // Desplazar al último mensaje
+                messages.scrollTop = messages.scrollHeight;
+            }
+        }
     </script>
+    
 </body>
 </html>

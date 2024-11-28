@@ -1,0 +1,151 @@
+/* General */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #e6f0ff;
+  }
+  
+  h1 {
+    text-align: center;
+    color: #333;
+  }
+  
+  /* Header */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #060539;
+    color: white;
+    padding: 15px 30px;
+  }
+  
+  .date-time,
+  .user-info,
+  .search-bar {
+    display: flex;
+    align-items: center;
+  }
+  
+  .search-bar input {
+    padding: 5px;
+    border-radius: 5px;
+    border: none;
+    margin-right: 10px;
+  }
+  
+  .search-bar button {
+    background-color: #060539;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .search-bar button:hover {
+    background-color: #060539;
+  }
+  
+  .user-info img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-left: 10px;
+  }
+  
+  /* Page Header */
+  .page-header {
+    background-color: white;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .product-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .add-product {
+    margin-top: 10px;
+    display: flex;
+    gap: 10px;
+  }
+  
+  .add-product input,
+  .add-product button {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+  
+  .add-product button {
+    background-color: #060539;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .add-product button:hover {
+    background-color: #060539;
+  }
+  
+  /* Gallery */
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    padding: 20px;
+  }
+  
+  .product {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 10px;
+    text-align: center;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .product img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .product h3 {
+    font-size: 1.2em;
+    color: #333;
+  }
+  
+  .product button {
+    background-color: #060539;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .product button:hover {
+    background-color: #060539;
+  }
+  
+  /* Responsivo */
+  @media (max-width: 900px) {
+    .gallery {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  @media (max-width: 600px) {
+    .gallery {
+      grid-template-columns: 1fr;
+    }
+  }
+  

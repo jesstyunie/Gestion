@@ -4,8 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reporte de Ventas</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+      
+    <div class="header">
+        <div class="date-time">
+            <span id="date">Fecha:</span>
+            <span id="time">Hora:</span>
+        </div>
+        <div class="search-bar">
+            <input type="text" id="search-input" placeholder="Buscar...">
+            <button id="search-button">Buscar</button>
+        </div>
+        <div class="user-info">
+            <span id="user">Usuario:</span>
+            <img src="user-icon.png" alt="Usuario" class="user-icon">
+        </div>
+    </div>
     <h1>Seleccionar Reporte de Ventas</h1>
     <form action="/generar-reporte" method="POST">
         <label for="reporte">Seleccione un tipo de reporte:</label>

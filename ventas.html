@@ -4,20 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro de Ventas</title>
+  
+
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
             padding: 0;
-            background-color: #f9f9f9;
+            ;
         }
         h1 {
             text-align: center;
         }
         form {
+            color:white;
             margin-bottom: 20px;
             padding: 15px;
-            background-color: #fff;
+            background-color: #060539;
             border: 1px solid #ddd;
             border-radius: 5px;
         }
@@ -39,7 +42,8 @@
             margin-top: 20px;
         }
         table th, table td {
-            border: 1px solid #ddd;
+            border: 1px solid #060539;
+            background-color: #060539;
             padding: 10px;
             text-align: left;
         }
@@ -58,9 +62,44 @@
             color: red;
             font-weight: bold;
         }
+        .header {
+    background-color: #060539;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+}
+
+.date-time, .user-info {
+    display: flex;
+    align-items: center;
+}
+
+.user-info .user-icon {
+    margin-left: 10px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: white;
+}
     </style>
 </head>
 <body>
+    <div class="header">
+        <div class="date-time">
+            <span id="date">Fecha:</span>
+            <span id="time">Hora:</span>
+        </div>
+        <div class="search-bar">
+            <input type="text" id="search-input" placeholder="Buscar...">
+            <button id="search-button">Buscar</button>
+        </div>
+        <div class="user-info">
+            <span id="user">Usuario:</span>
+            <img src="user-icon.png" alt="Usuario" class="user-icon">
+        </div>
+    </div>
     <div class="container">
         <h1>Registro de Ventas</h1>
 
