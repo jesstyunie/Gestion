@@ -5,7 +5,8 @@ const cors = require('cors');
 const app = express();
 const port = 3003;
 
-
+const PDFDocument = require('pdfkit');
+const fs = require('fs');
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -192,63 +193,69 @@ app.get('/reporte-ventas', (req, res) => {
 });
 
 // Ruta para generar el reporte
-app.post('/generar-reporte', (req, res) => {
-    const tipoReporte = req.body.reporte;  // Tipo de reporte: 'diario', 'semanal', 'mensual'
+// Ruta para generar el reporte
+app.post('/generar-reporte-pdf', async (req, res) => {
+    try {
+        const tipoReporte = req.body.reporte;
+        let query = '';
 
-    let query = '';
-    let mensaje = '';
-
-    // Lógica de la consulta
-    if (tipoReporte === 'diario') {
-        query = 'SELECT * FROM ventas WHERE DATE(fecha) = CURDATE()';
-        mensaje = 'Reporte Diario';
-    } else if (tipoReporte === 'semanal') {
-        query = 'SELECT * FROM ventas WHERE YEARWEEK(fecha, 1) = YEARWEEK(CURDATE(), 1)';
-        mensaje = 'Reporte Semanal';
-    } else if (tipoReporte === 'mensual') {
-        query = 'SELECT * FROM ventas WHERE MONTH(fecha) = MONTH(CURDATE()) AND YEAR(fecha) = YEAR(CURDATE())';
-        mensaje = 'Reporte Mensual';
-    }
-
-    // Depuración de la consulta generada
-    console.log('Consulta SQL:', query);
-
-    // Ejecutamos la consulta
-    db.query(query, (err, results) => {
-        if (err) {
-            console.error('Error al ejecutar la consulta:', err);
-            res.status(500).send('Error al generar el reporte');
-            return;
+        // Dependiendo del tipo de reporte, ajustamos la consulta
+        if (tipoReporte === 'diario') {
+            query = `SELECT ventas.id, inventario.nombre AS producto, ventas.cantidad_vendida, ventas.fecha, ventas.total
+                     FROM ventas
+                     JOIN inventario ON ventas.id_producto = inventario.id
+                     WHERE DATE(ventas.fecha) = CURDATE()`;
+        } else if (tipoReporte === 'semanal') {
+            query = `SELECT ventas.id, inventario.nombre AS producto, ventas.cantidad_vendida, ventas.fecha, ventas.total
+                     FROM ventas
+                     JOIN inventario ON ventas.id_producto = inventario.id
+                     WHERE YEARWEEK(ventas.fecha, 1) = YEARWEEK(CURDATE(), 1)`;
+        } else if (tipoReporte === 'mensual') {
+            query = `SELECT ventas.id, inventario.nombre AS producto, ventas.cantidad_vendida, ventas.fecha, ventas.total
+                     FROM ventas
+                     JOIN inventario ON ventas.id_producto = inventario.id
+                     WHERE MONTH(ventas.fecha) = MONTH(CURDATE()) AND YEAR(ventas.fecha) = YEAR(CURDATE())`;
+        } else {
+            return res.status(400).send('Tipo de reporte no válido');
         }
 
-        // Renderizamos el reporte en HTML
-        res.send(`
-            <h1>${mensaje}</h1>
-            <table border="1">
-                <thead>
-                    <tr>
-                        <th>ID Venta</th>
-                        <th>Producto</th>
-                        <th>Cantidad</th>
-                        <th>Fecha de Venta</th>
-                        <th>Total</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    ${results.map(venta => `
-                        <tr>
-                            <td>${venta.id_venta}</td>
-                            <td>${venta.producto}</td>
-                            <td>${venta.cantidad}</td>
-                            <td>${venta.fecha}</td>
-                            <td>${venta.total}</td>
-                        </tr>
-                    `).join('')}
-                </tbody>
-            </table>
-        `);
-    });
+        const [results] = await db.query(query);
+        const PDFDocument = require('pdfkit');
+        const fs = require('fs');
+        const filePath = __dirname + '/reporte-ventas.pdf';
+
+        const writeStream = fs.createWriteStream(filePath);
+        const doc = new PDFDocument();
+        doc.pipe(writeStream);
+
+        doc.fontSize(18).text('Reporte de Ventas', { align: 'center' }).moveDown(2);
+
+        // Aquí cambiamos el id_producto por nombre, que ahora se obtiene en la consulta
+        results.forEach((venta) => {
+            doc.fontSize(10).text(`ID Venta: ${venta.id}`);
+            doc.fontSize(10).text(`Producto: ${venta.producto}`);  // Ahora muestra el nombre del producto desde inventario
+            doc.fontSize(10).text(`Cantidad: ${venta.cantidad_vendida}`);
+            doc.fontSize(10).text(`Fecha: ${venta.fecha}`);
+            doc.fontSize(10).text(`Total: $${venta.total}`);
+            doc.moveDown();
+        });
+
+        doc.end();
+
+        writeStream.on('finish', () => {
+            res.download(filePath, 'reporte-ventas.pdf', (err) => {
+                if (err) {
+                    console.error('Error al descargar el PDF:', err);
+                }
+                fs.unlinkSync(filePath);  // Eliminar archivo después de la descarga
+            });
+        });
+    } catch (err) {
+        console.error('Error al generar PDF:', err);
+        res.status(500).send('Error interno del servidor');
+    }
 });
+
 
 
 
