@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Ventas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            text-align: center;
+        }
+        form {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        form label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        form input, form select, form button {
+            width: 100%;
+            margin-bottom: 15px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table th, table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        table th {
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .success {
+            color: green;
+            font-weight: bold;
+        }
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Registro de Ventas</h1>
+
+        <!-- Formulario de registro de venta -->
+        <form id="registroVentaForm">
+            <label for="producto">Producto</label>
+            <select id="producto" name="producto" required>
+                <option value="" disabled selected>Seleccione un producto</option>
+            </select>
+
+            <label for="cantidad">Cantidad Vendida</label>
+            <input type="number" id="cantidad" name="cantidad" required min="1" step="1">
+
+            <button type="submit">Registrar Venta</button>
+        </form>
+
+        <!-- Mensajes de éxito o error -->
+        <div id="mensaje" class="success" style="display: none;">Venta registrada correctamente.</div>
+        <div id="errorMensaje" class="error" style="display: none;">Hubo un error al registrar la venta.</div>
+
+        <!-- Tabla de productos -->
+        <h2>Productos Disponibles</h2>
+        <table id="tablaProductos">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Cantidad</th>
+                    <th>Precio</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Aquí se llenarán los productos dinámicamente -->
+            </tbody>
+        </table>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
