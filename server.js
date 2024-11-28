@@ -199,12 +199,22 @@ app.post('/generar-reporte-pdf', async (req, res) => {
         const tipoReporte = req.body.reporte;
         let query = '';
 
+        // Dependiendo del tipo de reporte, ajustamos la consulta
         if (tipoReporte === 'diario') {
-            query = 'SELECT * FROM ventas WHERE DATE(fecha) = CURDATE()';
+            query = `SELECT ventas.id, inventario.nombre AS producto, ventas.cantidad_vendida, ventas.fecha, ventas.total
+                     FROM ventas
+                     JOIN inventario ON ventas.id_producto = inventario.id
+                     WHERE DATE(ventas.fecha) = CURDATE()`;
         } else if (tipoReporte === 'semanal') {
-            query = 'SELECT * FROM ventas WHERE YEARWEEK(fecha, 1) = YEARWEEK(CURDATE(), 1)';
+            query = `SELECT ventas.id, inventario.nombre AS producto, ventas.cantidad_vendida, ventas.fecha, ventas.total
+                     FROM ventas
+                     JOIN inventario ON ventas.id_producto = inventario.id
+                     WHERE YEARWEEK(ventas.fecha, 1) = YEARWEEK(CURDATE(), 1)`;
         } else if (tipoReporte === 'mensual') {
-            query = 'SELECT * FROM ventas WHERE MONTH(fecha) = MONTH(CURDATE()) AND YEAR(fecha) = YEAR(CURDATE())';
+            query = `SELECT ventas.id, inventario.nombre AS producto, ventas.cantidad_vendida, ventas.fecha, ventas.total
+                     FROM ventas
+                     JOIN inventario ON ventas.id_producto = inventario.id
+                     WHERE MONTH(ventas.fecha) = MONTH(CURDATE()) AND YEAR(ventas.fecha) = YEAR(CURDATE())`;
         } else {
             return res.status(400).send('Tipo de reporte no válido');
         }
@@ -220,12 +230,13 @@ app.post('/generar-reporte-pdf', async (req, res) => {
 
         doc.fontSize(18).text('Reporte de Ventas', { align: 'center' }).moveDown(2);
 
+        // Aquí cambiamos el id_producto por nombre, que ahora se obtiene en la consulta
         results.forEach((venta) => {
-            doc.text(`ID Venta: ${venta.id}`);
-            doc.text(`Producto: ${venta.id_producto}`);
-            doc.text(`Cantidad: ${venta.cantidad_vendida}`);
-            doc.text(`Fecha: ${venta.fecha}`);
-            doc.text(`Total: $${venta.total}`);
+            doc.fontSize(10).text(`ID Venta: ${venta.id}`);
+            doc.fontSize(10).text(`Producto: ${venta.producto}`);  // Ahora muestra el nombre del producto desde inventario
+            doc.fontSize(10).text(`Cantidad: ${venta.cantidad_vendida}`);
+            doc.fontSize(10).text(`Fecha: ${venta.fecha}`);
+            doc.fontSize(10).text(`Total: $${venta.total}`);
             doc.moveDown();
         });
 
